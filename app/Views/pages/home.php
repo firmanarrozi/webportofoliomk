@@ -4,8 +4,10 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Hello, world!</h1>
+      <h1>Selamat Datang di Web Portofolio</h1>
     </div>
   </div>
 </div>
+
 <?= $this->endSection(); ?> 
+

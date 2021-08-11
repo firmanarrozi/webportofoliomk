@@ -47,7 +47,7 @@ class Komik extends BaseController
 
     public function create()
     {
-        session();
+        // session();
 
         $data = [
             'title' => 'Form Tambah Data Komik',
@@ -81,4 +81,42 @@ class Komik extends BaseController
 
         return redirect()->to('/komik');
     }
+
+    public function delete($id)
+    {
+        $this->komikModel->delete($id);
+        session()->setFlashdata('pesan','Data berhasil dihapus');
+        return redirect()->to('/komik');
+    }
+
+    public function edit($slug)
+    {
+        $data = [
+            'title' => 'Form Ubah Data Komik',
+            'validation' => \Config\Services::validation(),
+            'komik' => $this->komikModel->getKomik($slug)
+        ];
+
+        return view('komik/edit', $data); 
+    }
+
+    public function update($id)
+    {
+        $slug = url_title($this->request->getVar('judul'), '-', true);
+
+        $this->komikModel->save([
+            'id' => $id,
+            'judul' => $this->request->getVar('judul'),
+            'slug' => $slug,
+            'penulis' => $this->request->getVar('penulis'),
+            'penerbit' => $this->request->getVar('penerbit'),
+            'sampul' => $this->request->getVar('sampul')
+        ]);
+        
+        session()->setFlashdata('pesan','Data berhasil diubah');
+
+        return redirect()->to('/komik');
+    }
+
 }
+
